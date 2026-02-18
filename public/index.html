@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#2563eb" />
+  <meta name="description" content="Гостиница Халачи в Дербенте. Комфортные номера, отличный сервис, вкусные завтраки. Бронируйте прямо сейчас!">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Халачи" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" href="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=192&q=80" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="header-container">
+      <a href="#" class="logo">
+        <span class="logo-icon">🏨</span>
+        <span class="logo-text">Хала<span>чи</span></span>
+      </a>
+      
+      <nav class="nav-desktop">
+        <a href="#rooms">Номера</a>
+        <a href="#services">Услуги</a>
+        <a href="#tours">Туры</a>
+        <a href="#location">Расположение</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+      
+      <div class="header-actions">
+        <a href="tel:+79281234567" class="phone-link">
+          <span>📞</span>
+          <span>+7 (928) 123-45-67</span>
+        </a>
+        <a href="#booking" class="btn btn-primary btn-sm">Забронировать</a>
+      </div>
+      
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <nav>
+      <a href="#rooms">Номера</a>
+      <a href="#services">Услуги</a>
+      <a href="#tours">Туры</a>
+      <a href="#location">Расположение</a>
+      <a href="#contacts">Контакты</a>
+      <a href="#booking" class="btn btn-primary">Забронировать</a>
+    </nav>
+  </div>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span>✦</span>
+            <span>Гостиница в Дербенте</span>
+          </div>
+          <h1>Добро пожаловать в «Халачи»</h1>
+          <p class="hero-subtitle">Комфорт и гостеприимство в сердце древнего города. Современные номера, вкусные завтраки и незабываемый отдых.</p>
+          
+          <!-- Quick Booking -->
+          <div class="quick-booking">
+            <div class="qb-item">
+              <span class="qb-label">Заезд</span>
+              <input type="date" id="checkIn" class="qb-input" />
+            </div>
+            <div class="qb-item">
+              <span class="qb-label">Выезд</span>
+              <input type="date" id="checkOut" class="qb-input" />
+            </div>
+            <div class="qb-item">
+              <span class="qb-label">Гости</span>
+              <select id="guests" class="qb-select">
+                <option value="1">1 гость</option>
+                <option value="2" selected>2 гостя</option>
+                <option value="3">3 гостя</option>
+                <option value="4">4+ гостей</option>
+              </select>
+            </div>
+            <button class="btn btn-primary btn-lg" onclick="quickBook()">Найти номер</button>
+          </div>
+          
+          <!-- Stats -->
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-number" id="visitorCount">12,847</span>
+              <span class="stat-label">Гостей</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">15</span>
+              <span class="stat-label">Номеров</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">4.8</span>
+              <span class="stat-label">Рейтинг</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rooms Section -->
+    <section class="rooms section" id="rooms">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2>Наши номера</h2>
+            <p>Выберите идеальный номер для комфортного отдыха</p>
+          </div>
+        </div>
+        <div class="rooms-grid" id="roomsGrid">
+          <!-- Rooms loaded from API -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Services/Amenities -->
+    <section class="services section" id="services">
+      <div class="container">
+        <div class="section-header">
+          <h2>Услуги и удобства</h2>
+        </div>
+        <div class="services-grid" id="servicesGrid">
+          <!-- Services loaded from API -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Tours Section -->
+    <section class="tours section" id="tours">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2>Туры и экскурсии</h2>
+            <p>Откройте для себя красоту Дагестана</p>
+          </div>
+        </div>
+        
+        <div class="category-filter" id="categoryFilter">
+          <button class="filter-btn active" data-category="all">Все</button>
+          <!-- Categories loaded from API -->
+        </div>
+        
+        <div class="tours-grid" id="toursGrid">
+          <!-- Tours loaded from API -->
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about section" id="about">
+      <div class="container">
+        <div class="about-content">
+          <div class="about-text">
+            <div class="section-title">О гостинице</div>
+            <h2>Халачи — ваш уютный дом в Дербенте</h2>
+            <p id="aboutText">Загрузка...</p>
+            <div class="about-features">
+              <div class="about-feature">
+                <span class="af-icon">📍</span>
+                <span>В 800м от моря</span>
+              </div>
+              <div class="about-feature">
+                <span class="af-icon">🅿️</span>
+                <span>Бесплатная парковка</span>
+              </div>
+              <div class="about-feature">
+                <span class="af-icon">🍽️</span>
+                <span>Завтраки включены</span>
+              </div>
+              <div class="about-feature">
+                <span class="af-icon">📶</span>
+                <span>Wi-Fi бесплатно</span>
+              </div>
+            </div>
+          </div>
+          <div class="about-image">
+            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80" alt="Халачи Гостиница" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Location Section -->
+    <section class="location section" id="location">
+      <div class="container">
+        <div class="section-header">
+          <h2>Расположение</h2>
+          <p id="addressText">Загрузка...</p>
+        </div>
+        <div class="location-content">
+          <div class="map-container">
+            <div class="map-placeholder" id="mapPlaceholder">
+              <span>🗺️</span>
+              <p>Карта загружается...</p>
+              <small>г. Дербенте, ул. Тахо-Годи, 4А</small>
+            </div>
+          </div>
+          <div class="nearby-places" id="nearbyPlaces">
+            <h4>Что рядом:</h4>
+            <!-- Loaded from API -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews section" id="reviews">
+      <div class="container">
+        <div class="section-header">
+          <h2>Отзывы гостей</h2>
+        </div>
+        <div class="reviews-grid" id="reviewsGrid">
+          <!-- Reviews loaded from API -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking Form -->
+    <section class="booking section" id="booking">
+      <div class="container">
+        <div class="booking-wrapper">
+          <div class="booking-info">
+            <div class="section-title">Бронирование</div>
+            <h2>Забронируйте номер прямо сейчас</h2>
+            <p>Оставьте заявку, и наш менеджер свяжется с вами в течение 15 минут</p>
+            <ul class="booking-contacts">
+              <li><span>📞</span> +7 (928) 123-45-67</li>
+              <li><span>✉️</span> info@halachi-hotel.ru</li>
+              <li><span>🕐</span> Ежедневно с 09:00 до 21:00</li>
+            </ul>
+          </div>
+          <form class="booking-form" id="bookingForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Ваше имя *</label>
+                <input type="text" name="name" placeholder="Иван" required />
+              </div>
+              <div class="form-group">
+                <label>Телефон *</label>
+                <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Дата заезда</label>
+                <input type="date" name="check_in" />
+              </div>
+              <div class="form-group">
+                <label>Дата выезда</label>
+                <input type="date" name="check_out" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Выберите номер</label>
+              <select name="room_type">
+                <option value="">Любой номер</option>
+                <option value="standard">Стандарт</option>
+                <option value="comfort">Комфорт</option>
+                <option value="family">Семейный</option>
+                <option value="suite">Люкс</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Количество гостей</label>
+              <select name="guests">
+                <option value="1">1 гость</option>
+                <option value="2" selected>2 гостя</option>
+                <option value="3">3 гостя</option>
+                <option value="4">4+ гостей</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Комментарий</label>
+              <textarea name="comment" rows="3" placeholder="Ваши пожелания, особые требования..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+              Отправить заявку
+            </button>
+            <p class="form-note">Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contacts -->
+    <section class="contacts section" id="contacts">
+      <div class="container">
+        <div class="contacts-grid">
+          <div class="contact-card">
+            <div class="contact-icon">📍</div>
+            <h4>Адрес</h4>
+            <p id="contactAddress">Загрузка...</p>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon">📞</div>
+            <h4>Телефон</h4>
+            <p><a href="tel:+79281234567">+7 (928) 123-45-67</a></p>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon">✉️</div>
+            <h4>Email</h4>
+            <p><a href="mailto:info@halachi-hotel.ru">info@halachi-hotel.ru</a></p>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon">🕐</div>
+            <h4>Режим работы</h4>
+            <p>Круглосуточно<br>Стойка регистрации</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <span class="logo-icon">🏨</span>
+            <span class="logo-text">Хала<span>чи</span></span>
+          </a>
+          <p>Гостиница в Дербенте — ваш комфортный отдых с 2020 года</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Номера</h4>
+            <a href="#rooms">Стандарт</a>
+            <a href="#rooms">Комфорт</a>
+            <a href="#rooms">Семейный</a>
+            <a href="#rooms">Люкс</a>
+          </div>
+          <div class="footer-col">
+            <h4>Услуги</h4>
+            <a href="#tours">Туры</a>
+            <a href="#tours">Экскурсии</a>
+            <a href="#services">Трансфер</a>
+          </div>
+          <div class="footer-col">
+            <h4>Информация</h4>
+            <a href="#about">О нас</a>
+            <a href="#location">Как добраться</a>
+            <a href="#contacts">Контакты</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Гостиница «Халачи». Все права защищены.</p>
+        <p>👥 <span id="footerVisitorCount">12,847</span> гостей останавливались у нас</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Room Details Modal -->
+  <div class="modal" id="roomModal">
+    <div class="modal-content modal-large">
+      <div class="modal-header">
+        <h3 id="roomModalTitle">Номер</h3>
+        <button class="modal-close" onclick="closeRoomModal()">&times;</button>
+      </div>
+      <div class="room-modal-body" id="roomModalBody">
+        <!-- Room details loaded dynamically -->
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeRoomModal()">Закрыть</button>
+        <button class="btn btn-primary" onclick="bookCurrentRoom()">Забронировать</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tour Details Modal -->
+  <div class="modal" id="tourModal">
+    <div class="modal-content modal-large">
+      <div class="modal-header">
+        <h3 id="tourModalTitle">Тур</h3>
+        <button class="modal-close" onclick="closeTourModal()">&times;</button>
+      </div>
+      <div class="tour-modal-body" id="tourModalBody">
+        <!-- Tour details loaded dynamically -->
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeTourModal()">Закрыть</button>
+        <button class="btn btn-primary" onclick="bookCurrentTour()">Записаться на тур</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back to top button -->
+  <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Наверх">↑</button>
+  
+  <!-- Offline indicator -->
+  <div class="offline-indicator" id="offlineIndicator">
+    📴 Вы офлайн — некоторые функции могут быть недоступны
+  </div>
+
+  <script src="/js/app.js"></script>
+  
+  <!-- PWA Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('SW registered:', registration.scope);
+          })
+          .catch((error) => {
+            console.log('SW registration failed:', error);
+          });
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#1a1a2e" />
+  <title>Admin Panel — Халачи Гостиница v2</title>
+  <link rel="stylesheet" href="/css/admin.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="/" class="logo" target="_blank">
+          <span>🏨</span>
+          <span>Хала<span>чи</span></span>
+        </a>
+        <span class="admin-badge">Admin v2</span>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-section="dashboard">
+          <span class="nav-icon">📊</span>
+          <span>Дашборд</span>
+        </a>
+        <a href="#" class="nav-item" data-section="hotel">
+          <span class="nav-icon">🏨</span>
+          <span>Гостиница</span>
+        </a>
+        <a href="#" class="nav-item" data-section="rooms">
+          <span class="nav-icon">🛏️</span>
+          <span>Номера</span>
+        </a>
+        <a href="#" class="nav-item" data-section="tours">
+          <span class="nav-icon">🗺️</span>
+          <span>Туры</span>
+        </a>
+        <a href="#" class="nav-item" data-section="categories">
+          <span class="nav-icon">📂</span>
+          <span>Категории</span>
+        </a>
+        <a href="#" class="nav-item" data-section="reviews">
+          <span class="nav-icon">⭐</span>
+          <span>Отзывы</span>
+        </a>
+        <a href="#" class="nav-item" data-section="bookings">
+          <span class="nav-icon">📝</span>
+          <span>Заявки</span>
+        </a>
+        <a href="#" class="nav-item" data-section="guests">
+          <span class="nav-icon">👥</span>
+          <span>Гости</span>
+        </a>
+        <a href="#" class="nav-item" data-section="chessboard">
+          <span class="nav-icon">🏁</span>
+          <span>Шахматка</span>
+        </a>
+        <a href="#" class="nav-item" data-section="notes">
+          <span class="nav-icon">📝</span>
+          <span>Заметки</span>
+        </a>
+        <a href="#" class="nav-item" data-section="analytics">
+          <span class="nav-icon">📈</span>
+          <span>Аналитика</span>
+        </a>
+        <a href="#" class="nav-item" data-section="settings">
+          <span class="nav-icon">⚙️</span>
+          <span>Настройки</span>
+        </a>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <button class="nav-item" id="logoutBtn">
+          <span class="nav-icon">🚪</span>
+          <span>Выйти</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <button class="menu-toggle" id="menuToggle">☰</button>
+        <h1 class="page-title">Дашборд</h1>
+        <div class="admin-actions">
+          <button class="btn btn-secondary" onclick="exportData()" title="Выгрузить">📥</button>
+          <span class="current-time" id="currentTime"></span>
+          <div class="admin-user">
+            <span class="user-avatar">👤</span>
+            <span>Admin</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Section -->
+      <section class="admin-section active" id="dashboard">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">🛏️</div>
+            <div class="stat-info">
+              <span class="stat-value" id="totalRooms">-</span>
+              <span class="stat-label">Номеров</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🗺️</div>
+            <div class="stat-info">
+              <span class="stat-value" id="totalTours">-</span>
+              <span class="stat-label">Туров</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-info">
+              <span class="stat-value" id="totalGuests">-</span>
+              <span class="stat-label">Гостей</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-info">
+              <span class="stat-value" id="avgRating">-</span>
+              <span class="stat-label">Рейтинг</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="dashboard-grid">
+          <div class="dashboard-card">
+            <h3>📝 Недавние заявки</h3>
+            <div class="recent-list" id="recentBookings">
+              <p style="color: var(--gray);">Загрузка...</p>
+            </div>
+          </div>
+          <div class="dashboard-card">
+            <h3>📊 Статистика</h3>
+            <div class="stats-mini">
+              <div class="stat-mini-item">
+                <span>👁️ Визиты сегодня</span>
+                <span id="todayViews">-</span>
+              </div>
+              <div class="stat-mini-item">
+                <span>📅 Заявок</span>
+                <span id="todayBookings">-</span>
+              </div>
+              <div class="stat-mini-item">
+                <span>🛏️ Сейчас живут</span>
+                <span id="nowHoused">-</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Notes Section -->
+      <section class="admin-section" id="notes">
+        <div class="section-header">
+          <h2>📝 Заметки и задачи</h2>
+          <button class="btn btn-primary" onclick="openNoteModal()">➕ Добавить</button>
+        </div>
+        
+        <div class="notes-grid" id="notesGrid">
+          <p style="color: var(--gray);">Загрузка...</p>
+        </div>
+      </section>
+
+      <!-- Analytics Section -->
+      <section class="admin-section" id="analytics">
+        <div class="section-header">
+          <h2>📈 Аналитика</h2>
+          <button class="btn btn-secondary" onclick="refreshAnalytics()">🔄</button>
+        </div>
+        
+        <div class="analytics-stats">
+          <div class="stat-card">
+            <div class="stat-icon">👁️</div>
+            <div class="stat-info">
+              <span class="stat-value" id="analyticsViews">0</span>
+              <span class="stat-label">Просмотры страниц</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📝</div>
+            <div class="stat-info">
+              <span class="stat-value" id="analyticsBookings">0</span>
+              <span class="stat-label">Заявок</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-info">
+              <span class="stat-value" id="analyticsVisitors">0</span>
+              <span class="stat-label">Уникальные посетители</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hotel Section -->
+      <section class="admin-section" id="hotel">
+        <div class="section-header">
+          <h2>🏨 Информация о гостинице</h2>
+          <button class="btn btn-primary" id="saveHotelBtn" onclick="saveHotelDirect()">💾 Сохранить</button>
+        </div>
+        
+        <form class="admin-form" id="hotelForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Название</label>
+              <input type="text" name="name" />
+            </div>
+            <div class="form-group">
+              <label>Телефон</label>
+              <input type="tel" name="phone" />
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" name="email" />
+            </div>
+            <div class="form-group">
+              <label>Адрес</label>
+              <input type="text" name="address" />
+            </div>
+            
+            <div class="form-group full-width">
+              <label>Главное фото (hero)</label>
+              <input type="hidden" name="hero_image" id="heroImageInput" />
+              <div class="image-upload-area" id="heroImageArea" onclick="document.getElementById('heroImageFile').click()" 
+                   style="border: 2px dashed var(--gray-lighter); border-radius: 8px; padding: 20px; text-align: center; cursor: pointer;">
+                <div id="heroImagePreview">
+                  <span style="font-size: 32px;">🏨</span>
+                  <p style="color: var(--gray); margin-top: 8px;">Нажмите или перетащите фото</p>
+                </div>
+              </div>
+              <input type="file" id="heroImageFile" accept="image/*" style="display: none;" />
+            </div>
+            
+            <div class="form-group full-width">
+              <label>Описание</label>
+              <textarea name="description" rows="4"></textarea>
+            </div>
+            <div class="form-group full-width">
+              <label>О гостинице</label>
+              <textarea name="about" rows="6"></textarea>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- Rooms Section -->
+      <section class="admin-section" id="rooms">
+        <div class="section-header">
+          <h2>🛏️ Управление номерами</h2>
+          <div class="header-btns">
+            <button class="btn btn-secondary" onclick="exportData()">📥</button>
+            <button class="btn btn-primary" id="addRoomBtn">➕ Добавить номер</button>
+          </div>
+        </div>
+        
+        <div class="rooms-list" id="roomsList">
+          <div style="color: var(--gray);">Загрузка...</div>
+        </div>
+      </section>
+
+      <!-- Tours Section -->
+      <section class="admin-section" id="tours">
+        <div class="section-header">
+          <h2>🗺️ Управление турами</h2>
+          <div class="header-btns">
+            <button class="btn btn-secondary" onclick="exportData()">📥</button>
+            <button class="btn btn-primary" id="addTourBtn">➕ Добавить тур</button>
+          </div>
+        </div>
+        
+        <div class="tours-list" id="toursList">
+          <div style="color: var(--gray);">Загрузка...</div>
+        </div>
+      </section>
+
+      <!-- Categories Section -->
+      <section class="admin-section" id="categories">
+        <div class="section-header">
+          <h2>📂 Категории</h2>
+          <button class="btn btn-primary" onclick="openCategoryModal()">➕ Добавить</button>
+        </div>
+        
+        <div class="categories-list" id="categoriesList">
+          <div style="color: var(--gray);">Загрузка...</div>
+        </div>
+      </section>
+
+      <!-- Reviews Section -->
+      <section class="admin-section" id="reviews">
+        <div class="section-header">
+          <h2>⭐ Отзывы</h2>
+          <button class="btn btn-secondary" onclick="renderReviews()">🔄 Обновить</button>
+        </div>
+        
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Имя</th>
+                <th>Оценка</th>
+                <th>Отзыв</th>
+                <th>Статус</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody id="reviewsTableBody">
+              <tr><td colspan="5" style="text-align: center; color: var(--gray);">Загрузка...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Bookings Section -->
+      <section class="admin-section" id="bookings">
+        <div class="section-header">
+          <h2>📝 Заявки на бронирование</h2>
+          <button class="btn btn-secondary" id="refreshBookings">🔄 Обновить</button>
+        </div>
+        
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Имя</th>
+                <th>Телефон</th>
+                <th>Тип/Гости</th>
+                <th>Даты</th>
+                <th>Статус</th>
+              </tr>
+            </thead>
+            <tbody id="bookingsTableBody">
+              <tr><td colspan="6" style="text-align: center; color: var(--gray);">Загрузка...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Guests Section -->
+      <section class="admin-section" id="guests">
+        <div class="section-header">
+          <h2>👥 Учёт гостей</h2>
+          <div class="header-btns">
+            <button class="btn btn-secondary" onclick="exportGuests()">📥</button>
+            <button class="btn btn-primary" id="addGuestBtn">➕ Заселить гостя</button>
+          </div>
+        </div>
+        
+        <div class="stats-row" style="margin-bottom: 20px; display: flex; gap: 20px; flex-wrap: wrap;">
+          <div class="stat-badge" style="background: #dcfce7; color: #166534; padding: 8px 16px; border-radius: 8px;">
+            <span id="statTotalGuests">0</span> Всего
+          </div>
+          <div class="stat-badge" style="background: #dbeafe; color: #1e40af; padding: 8px 16px; border-radius: 8px;">
+            <span id="statCurrentlyHoused">0</span> Сейчас живут
+          </div>
+          <div class="stat-badge" style="background: #fef3c7; color: #92400e; padding: 8px 16px; border-radius: 8px;">
+            <span id="statTodayCheckins">0</span> Заезды сегодня
+          </div>
+        </div>
+        
+        <div class="filter-bar">
+          <input type="text" placeholder="Поиск..." class="search-input" id="guestSearch" />
+          <select id="guestStatusFilter">
+            <option value="">Все статусы</option>
+            <option value="checked_in">Живут</option>
+            <option value="checked_out">Выселены</option>
+          </select>
+        </div>
+        
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ФИО</th>
+                <th>Телефон</th>
+                <th>Номер</th>
+                <th>Заезд</th>
+                <th>Выезд</th>
+                <th>Гостей</th>
+                <th>Статус</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody id="guestsTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Chessboard Section -->
+      <section class="admin-section" id="chessboard">
+        <div class="section-header">
+          <h2>🏁 Шахматка бронирований</h2>
+          <div class="header-btns">
+            <select id="chessboardMonth" style="padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 6px;">
+              <option value="0">Январь 2026</option>
+              <option value="1">Февраль 2026</option>
+              <option value="2">Март 2026</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="chessboard-container" id="chessboardContainer">
+          <div style="color: var(--gray); text-align: center; padding: 40px;">
+            Загрузка шахматки...
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings Section -->
+      <section class="admin-section" id="settings">
+        <div class="section-header">
+          <h2>⚙️ Настройки</h2>
+        </div>
+        
+        <div class="settings-grid">
+          <div class="settings-card">
+            <h3>📊 Счётчик посетителей</h3>
+            <div class="form-group">
+              <label>Количество</label>
+              <input type="number" name="visitor_count" />
+            </div>
+            <button class="btn btn-primary" onclick="saveVisitorCount()">Сохранить</button>
+          </div>
+          
+          <div class="settings-card">
+            <h3>🔐 Пароль администратора</h3>
+            <div class="form-group">
+              <label>Новый пароль</label>
+              <input type="password" name="admin_password" placeholder="Оставьте пустым чтобы не менять" />
+            </div>
+            <button class="btn btn-primary" onclick="changePassword()">Изменить</button>
+          </div>
+          
+          <div class="settings-card">
+            <h3>💾 Резервное копирование</h3>
+            <p style="color: var(--gray); margin-bottom: 16px;">Создайте резервную копию всех данных</p>
+            <button class="btn btn-secondary" onclick="exportData()">📥 Скачать бэкап</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modals -->
+  <!-- Room Modal -->
+  <div class="modal" id="roomModal">
+    <div class="modal-content" style="max-width: 700px;">
+      <div class="modal-header">
+        <h3 id="roomModalTitle">Добавить номер</h3>
+        <button class="modal-close" onclick="closeRoomModal()">&times;</button>
+      </div>
+      <form class="modal-form" id="roomForm">
+        <input type="hidden" name="id" />
+        <input type="hidden" name="popular" value="0" />
+        <input type="hidden" name="sort_order" value="0" />
+        
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Название *</label>
+            <input type="text" name="name" required placeholder="Стандарт" />
+          </div>
+          <div class="form-group">
+            <label>Цена от (₽) *</label>
+            <input type="number" name="price_from" required placeholder="3500" />
+          </div>
+          <div class="form-group full-width">
+            <label>Описание</label>
+            <textarea name="description" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Размер (м²)</label>
+            <input type="text" name="size" placeholder="22 м²" />
+          </div>
+          <div class="form-group">
+            <label>Кровати</label>
+            <input type="text" name="beds" placeholder="1 двуспальная или 2 односпальные" />
+          </div>
+          <div class="form-group">
+            <label>Макс. гостей</label>
+            <input type="number" name="max_guests" value="2" min="1" />
+          </div>
+          <div class="form-group full-width">
+            <label>Фотографии</label>
+            <div class="image-upload-area" id="roomImagesArea" onclick="document.getElementById('roomImages').click()">
+              <div id="roomImagePreview"></div>
+              <span style="font-size: 24px;">📷</span>
+              <p>Нажмите или перетащите фото</p>
+            </div>
+            <input type="file" id="roomImages" multiple accept="image/*" style="display: none;" />
+          </div>
+        </div>
+        
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeRoomModal()">Отмена</button>
+          <button type="submit" class="btn btn-primary">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Tour Modal -->
+  <div class="modal" id="tourModal">
+    <div class="modal-content" style="max-width: 700px;">
+      <div class="modal-header">
+        <h3 id="tourModalTitle">Добавить тур</h3>
+        <button class="modal-close" onclick="closeTourModal()">&times;</button>
+      </div>
+      <form class="modal-form" id="tourForm">
+        <input type="hidden" name="id" />
+        <input type="hidden" name="featured" value="0" />
+        <input type="hidden" name="sort_order" value="0" />
+        
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label>Название *</label>
+            <input type="text" name="title" required placeholder="Обзорная экскурсия" />
+          </div>
+          <div class="form-group full-width">
+            <label>Краткое описание</label>
+            <input type="text" name="short_desc" placeholder="Короткое описание для карточки" />
+          </div>
+          <div class="form-group">
+            <label>Цена (₽) *</label>
+            <input type="number" name="price" required placeholder="2500" />
+          </div>
+          <div class="form-group">
+            <label>Продолжительность</label>
+            <input type="text" name="duration" placeholder="3 часа" />
+          </div>
+          <div class="form-group">
+            <label>Место</label>
+            <input type="text" name="location" placeholder="Дербент" />
+          </div>
+          <div class="form-group">
+            <label>Категория</label>
+            <select name="category"></select>
+          </div>
+          <div class="form-group full-width">
+            <label>Полное описание</label>
+            <textarea name="description" rows="4"></textarea>
+          </div>
+          <div class="form-group full-width">
+            <label>Расписание (дни недели через запятую)</label>
+            <input type="text" name="schedule" placeholder="Пн, Ср, Пт" />
+          </div>
+          <div class="form-group full-width">
+            <label>Фотографии</label>
+            <div class="image-upload-area" id="tourImagesArea" onclick="document.getElementById('tourImages').click()">
+              <div id="tourImagePreview"></div>
+              <span style="font-size: 24px;">📷</span>
+              <p>Нажмите или перетащите фото</p>
+            </div>
+            <input type="file" id="tourImages" multiple accept="image/*" style="display: none;" />
+          </div>
+        </div>
+        
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeTourModal()">Отмена</button>
+          <button type="submit" class="btn btn-primary">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Category Modal -->
+  <div class="modal" id="categoryModal">
+    <div class="modal-content" style="max-width: 400px;">
+      <div class="modal-header">
+        <h3>Добавить категорию</h3>
+        <button class="modal-close" onclick="closeCategoryModal()">&times;</button>
+      </div>
+      <form class="modal-form" id="categoryForm">
+        <div class="form-group">
+          <label>Название</label>
+          <input type="text" name="name" required placeholder="Экскурсии" />
+        </div>
+        <div class="form-group">
+          <label>Иконка (эмодзи)</label>
+          <input type="text" name="icon" placeholder="🏰" />
+        </div>
+        
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeCategoryModal()">Отмена</button>
+          <button type="submit" class="btn btn-primary">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Guest Modal -->
+  <div class="modal" id="guestModal">
+    <div class="modal-content" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 id="guestModalTitle">Заселение гостя</h3>
+        <button class="modal-close" onclick="closeGuestModal()">&times;</button>
+      </div>
+      <form class="modal-form" id="guestForm">
+        <input type="hidden" name="id" />
+        
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Фамилия *</label>
+            <input type="text" name="last_name" required placeholder="Иванов" />
+          </div>
+          <div class="form-group">
+            <label>Имя *</label>
+            <input type="text" name="first_name" required placeholder="Иван" />
+          </div>
+          <div class="form-group">
+            <label>Телефон</label>
+            <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="email@example.com" />
+          </div>
+          <div class="form-group full-width">
+            <label>Паспортные данные</label>
+            <input type="text" name="passport" placeholder="Серия и номер" />
+          </div>
+          <div class="form-group">
+            <label>Номер *</label>
+            <select name="room_id" required></select>
+          </div>
+          <div class="form-group">
+            <label>Заезд *</label>
+            <input type="date" name="check_in_date" required />
+          </div>
+          <div class="form-group">
+            <label>Выезд</label>
+            <input type="date" name="check_out_date" />
+          </div>
+          <div class="form-group">
+            <label>Гостей</label>
+            <input type="number" name="guests_count" value="1" min="1" />
+          </div>
+          <div class="form-group full-width">
+            <label>Примечания</label>
+            <textarea name="notes" rows="3"></textarea>
+          </div>
+        </div>
+        
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeGuestModal()">Отмена</button>
+          <button type="submit" class="btn btn-primary">Заселить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Chessboard Modal -->
+  <div class="modal" id="chessboardModal">
+    <div class="modal-content" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3>Заселить гостя</h3>
+        <button class="modal-close" onclick="closeChessboardModal()">&times;</button>
+      </div>
+      <form class="modal-form" id="chessboardForm">
+        <input type="hidden" name="check_in_date" id="chessboardCheckIn" />
+        
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label>Дата заезда</label>
+            <input type="date" id="chessboardCheckInDisplay" readonly style="background: var(--gray-lighter);" />
+          </div>
+          <div class="form-group full-width">
+            <label>Дата выезда *</label>
+            <input type="date" name="check_out_date" required id="chessboardCheckOut" />
+          </div>
+          <div class="form-group full-width">
+            <label>Номер *</label>
+            <select name="room_id" required id="chessboardRoomSelect"></select>
+          </div>
+          
+          <div class="form-section-title">Гость 1</div>
+          <div class="form-group">
+            <label>Фамилия *</label>
+            <input type="text" name="last_name_1" required placeholder="Иванов" />
+          </div>
+          <div class="form-group">
+            <label>Имя *</label>
+            <input type="text" name="first_name_1" required placeholder="Иван" />
+          </div>
+          <div class="form-group">
+            <label>Телефон</label>
+            <input type="tel" name="phone_1" placeholder="+7..." />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email_1" placeholder="email@example.com" />
+          </div>
+          <div class="form-group full-width">
+            <label>Паспорт</label>
+            <input type="text" name="passport_1" placeholder="Серия и номер" />
+          </div>
+          
+          <div class="form-group full-width" id="addGuest2Btn">
+            <button type="button" class="btn btn-secondary" onclick="showGuest2Fields()" style="width: 100%;">+ Добавить второго гостя</button>
+          </div>
+          
+          <div class="form-section-title" id="guest2Title" style="display: none;">Гость 2</div>
+          <div class="form-group" id="guest2LastName" style="display: none;">
+            <label>Фамилия *</label>
+            <input type="text" name="last_name_2" placeholder="Петров" />
+          </div>
+          <div class="form-group" id="guest2FirstName" style="display: none;">
+            <label>Имя *</label>
+            <input type="text" name="first_name_2" placeholder="Петр" />
+          </div>
+          <div class="form-group" id="guest2Phone" style="display: none;">
+            <label>Телефон</label>
+            <input type="tel" name="phone_2" placeholder="+7..." />
+          </div>
+          <div class="form-group" id="guest2Email" style="display: none;">
+            <label>Email</label>
+            <input type="email" name="email_2" placeholder="email@example.com" />
+          </div>
+          <div class="form-group full-width" id="guest2Passport" style="display: none;">
+            <label>Паспорт</label>
+            <input type="text" name="passport_2" placeholder="Серия и номер" />
+          </div>
+        </div>
+        
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeChessboardModal()">Отмена</button>
+          <button type="submit" class="btn btn-primary">Заселить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Note Modal -->
+  <div class="modal" id="noteModal">
+    <div class="modal-content" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3 id="noteModalTitle">Добавить заметку</h3>
+        <button class="modal-close" onclick="closeNoteModal()">&times;</button>
+      </div>
+      <form class="modal-form" id="noteForm">
+        <input type="hidden" name="id" />
+        
+        <div class="form-group">
+          <label>Заголовок *</label>
+          <input type="text" name="title" required placeholder="Название заметки" />
+        </div>
+        <div class="form-group">
+          <label>Содержание</label>
+          <textarea name="content" rows="4" placeholder="Текст заметки..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Категория</label>
+          <select name="category">
+            <option value="general">Общее</option>
+            <option value="booking">Бронирования</option>
+            <option value="guests">Гости</option>
+            <option value="tasks">Задачи</option>
+            <option value="ideas">Идеи</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Приоритет</label>
+          <select name="priority">
+            <option value="low">Низкий</option>
+            <option value="normal">Обычный</option>
+            <option value="high">Высокий</option>
+          </select>
+        </div>
+        
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeNoteModal()">Отмена</button>
+          <button type="submit" class="btn btn-primary">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>
